@@ -1,0 +1,54 @@
+
+<link rel="stylesheet" href="${cxt!}/assert/plugin/zTree_v3/css/zTreeStyle/zTreeStyle.css" type="text/css">
+		<!--搜索框-->
+		<form class="sui-form form-search">
+		<!-- <div class="input-append">search-query
+		  <input type="text" class="input-medium  span2" id="query" placeholder="请输入搜索条件">
+		  <button type="button" class="sui-btn btn-bordered btn-primary" onclick="search('dep_tree', 'query')">搜 索</button>
+		</div> -->
+		  <input type="text" class="input-medium  span2" id="query" placeholder="请输入搜索条件">
+		  <button type="button" class="sui-btn btn-bordered btn-primary" onclick="search('dep_tree', 'query')">搜 索</button>
+		</form>
+
+	<!--树-->
+    <ul id="dep_tree" class="ztree"></ul>  
+    <script type="text/javascript" src="${cxt!}/assert/plugin/zTree_v3/js/jquery-1.4.4.min.js"></script>
+	<script type="text/javascript" src="${cxt!}/assert/plugin/zTree_v3/js/jquery.ztree.core-3.5.js"></script>
+	<script type="text/javascript" src="${cxt!}/assert/plugin/zTree_v3/js/jquery.ztree.exhide-3.5.js"></script>
+	<script type="text/javascript" src="${cxt!}/assert/plugin/zTree_v3/js/jquery.ztree.search.js"></script>
+  	<script type="text/javascript" >
+  var setting = {
+		  async: {
+			  enable: true, 
+			  dataType:"json",
+			  type: "get",
+			  url: "/admdiv/listdata"
+		  },
+		  view: {
+			  dblClickExpand: true,
+			  selectedMulti: false,
+			  expandSpeed: ($.browser.msie && parseInt($.browser.version)<=6)?"":"fast"
+		  },
+		  data: {
+			    simpleData: {
+			      enable: true,
+			      idKey: "code",
+			      pIdKey: "pcode"
+			    }
+		  },
+		  callback: {
+		    //onNodeCreated: zTreeOnNodeCreated
+		  },
+			view: {
+				//fontCss: setFontCss
+			}
+		};
+  
+	  $(document).ready(function() {
+		  $.fn.zTree.init($("#dep_tree"), setting);
+		  
+	   });
+			
+		</script>
+
+

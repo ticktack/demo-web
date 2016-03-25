@@ -1,0 +1,16 @@
+<#macro table>
+<script type="text/x-template" id="table-tpl">
+	<table class="table table-striped">
+		<#nested>
+		<tfoot v-show="totalResult > pageSize">
+			<tr>
+				<td colspan="999" class="text-right">
+					<div class="pagination">
+						<pagination v-on:page-change="pageChange" :page-no="pageNo" :page-size="pageSize" :total-result="totalResult"></pagination>
+					</div>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+</script>
+</#macro>

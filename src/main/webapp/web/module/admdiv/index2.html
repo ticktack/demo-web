@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title> ztree demo </title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" href="${cxt!}/assert/plugin/zTree_v3/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+	body {
+	background-color: white;
+	margin:0; padding:0;
+	text-align: center;
+	}
+	div, p, table, th, td {
+		list-style:none;
+		margin:0; padding:0;
+		color:#333; font-size:12px;
+		font-family:dotum, Verdana, Arial, Helvetica, AppleGothic, sans-serif;
+	}
+	#testIframe {margin-left: 10px;}
+  </style>
+<script type="text/javascript" src="${cxt!}/assert/plugin/zTree_v3/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="${cxt!}/assert/plugin/zTree_v3/js/jquery.ztree.core-3.5.js"></script>
+  <script type="text/javascript" >
+	var setting = {
+			async: {
+				enable: true,
+				contentType: "application/json",
+				type: "get",
+				url: "/admdiv/listdata" 
+			},
+			key : {
+				name : name
+			},
+			data: {
+				simpleData: {
+					enable: true,
+					idKey: "code",
+					pIdKey: "pcode"
+				} 
+			},
+			callback: {
+				//beforeClick: beforeClick,
+				onClick: onClick
+			},
+			view: {
+				fontCss: getFontCss
+			}
+	};
+	
+	function beforeClick(treeId, treeNode, clickFlag) {
+		alert("[ call beforeClick at " + getTime()
+				+ "  ] \n [name,code] = " + treeNode.name + ", "
+				+ treeNode.code);
+
+	}
+	function onClick(event, treeId, treeNode, clickFlag) {
+		alert("[ call onClick at " + getTime() + "  ] clickFlag = "
+				+ clickFlag + "\n [name,code] = (" + treeNode.name
+				+ ", " + treeNode.code + ") ");
+	}
+
+	function getTime() {
+		var now = new Date(), h = now.getHours(), m = now.getMinutes(), s = now
+				.getSeconds();
+		return (h + ":" + m + ":" + s);
+	}
+	
+	function focusKey(e) {
+		if (key.hasClass("empty")) {
+			key.removeClass("empty");
+		}
+	}
+	function blurKey(e) {
+		if (key.get(0).value === "") {
+			key.addClass("empty");
+		}
+	}
+	var lastValue = "", nodeList = [], fontCss = {};
+	function clickRadio(e) {
+		lastValue = "";
+		searchNode(e);
+	}
+	function searchNode(e) {
+		var zTree = $.fn.zTree.getZTreeObj("tree");
+		if (!$("#getNodesByFilter").attr("checked")) {
+			var value = $.trim(key.get(0).value);
+			var keyType = "";
+			if ($("#name").attr("checked")) {
+				keyType = "name";
+			} else if ($("#level").attr("checked")) {
+				keyType = "level";
+				value = parseInt(value);
+			} else if ($("#id").attr("checked")) {
+				keyType = "id";
+				value = parseInt(value);
+			}
+			if (key.hasClass("empty")) {
+				value = "";
+			}
+			if (lastValue === value) return;
+			lastValue = value;
+			if (value === "") return;
+			updateNodes(false);
+
+			if ($("#getNodeByParam").attr("checked")) {
+				var node = zTree.getNodeByParam(keyType, value);
+				if (node === null) {
+					nodeList = [];
+				} else {
+					nodeList = [node];
+				}
+			} else if ($("#getNodesByParam").attr("checked")) {
+				nodeList = zTree.getNodesByParam(keyType, value);
+			} else if ($("#getNodesByParamFuzzy").attr("checked")) {
+				nodeList = zTree.getNodesByParamFuzzy(keyType, value);
+			}
+		} else {
+			updateNodes(false);
+			nodeList = zTree.getNodesByFilter(filter);
+		}
+		updateNodes(true);
+
+	}
+	function updateNodes(highlight) {
+		var zTree = $.fn.zTree.getZTreeObj("tree");
+		for( var i=0, l=nodeList.length; i<l; i++) {
+			nodeList[i].highlight = highlight;
+			zTree.updateNode(nodeList[i]);
+		}
+	}
+	function getFontCss(treeId, treeNode) {
+		return (!!treeNode.highlight) ? {color:"#A60000", "font-weight":"bold", background:"yellow"} : {color:"#333", "font-weight":"normal", background:"white"};
+	}
+	function filter(node) {
+		return !node.isParent && node.isFirstNode;
+	}
+	
+	var key;
+	
+	$(document).ready(function() {
+		$.fn.zTree.init($("#tree"), setting);
+		key = $("#key");
+		key.bind("focus", focusKey)
+			.bind("blur", blurKey)
+			.bind("propertychange", searchNode)
+			.bind("input", searchNode);
+		
+		$("#name").bind("change", clickRadio);
+		$("#level").bind("change", clickRadio);
+		$("#id").bind("change", clickRadio);
+		$("#getNodeByParam").bind("change", clickRadio);
+		$("#getNodesByParam").bind("change", clickRadio);
+		$("#getNodesByParamFuzzy").bind("change", clickRadio);
+		$("#getNodesByFilter").bind("change", clickRadio);
+	});
+
+			
+		</script>
+</head>  
+ <body>
+ 	<div style="align:left;">
+		<p>
+			<br/>
+			属性值( value )：
+			<input type="text" id="key" value="" class="empty" /><br/>
+			
+			属性( key )：
+			<input type="radio" id="name" name="keyType" class="radio first" checked /><span>name (string)</span><br/>
+			<input type="radio" id="level" name="keyType" class="radio" style="margin-left:68px;" /><span>level (number) ... 根节点 level = 0</span><br/>
+			<input type="radio" id="id" name="keyType" class="radio" style="margin-left:68px;" /><span>id (number)</span><br/>
+			
+			方法：
+			<input type="radio" id="getNodeByParam" name="funType" class="radio first" /><span>getNodeByParam</span><br/>
+			<input type="radio" id="getNodesByParam" name="funType" class="radio" style="margin-left:36px;" /><span>getNodesByParam</span><br/>
+			<input type="radio" id="getNodesByParamFuzzy" name="funType" class="radio" style="margin-left:36px;" checked /><span>getNodesByParamFuzzy (only string)</span><br/>
+			<input type="radio" id="getNodesByFilter" name="funType" class="radio" style="margin-left:36px;" /><span>getNodesByFilter (参考本页源码中 function filter)</span><br/>
+		</p>
+	 </div>
+	 <div class="zThree-content">
+		<ul id="tree" class="ztree"></ul>
+	</div>
+ </body>
+ </html> 
+  

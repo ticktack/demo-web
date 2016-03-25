@@ -1,0 +1,27 @@
+		<div class="control-group">
+			<label class="col-sm-2 control-label">标题：</label>
+			<div class="col-sm-10">
+			<!-- data-rules='required|minlength=2|maxlength=50' data-error-msg="标题必须是2-50位，汉字最多25个。" data-empty-msg="亲，标题别忘记填了" -->
+				<input type="text" class="form-control" name="title" value="{{title}}"  
+				data-rule-required='true' data-msg-required="亲，标题是必填项哦"
+				/>
+				<input type="hidden" v-model="title" value="${title!}"/>
+				${titleMsg!}
+			</div>
+		</div>
+		<div class="control-group">
+		  	<label class="col-sm-2 control-label">内容：</label>
+		  	<div class="col-sm-10">
+				<textarea class='form-control' name="content" data-rules='required' >{{content}}</textarea>
+				<input type="hidden" v-model="content" value="${content!}"/>
+				${contentMsg!}
+			</div>
+		</div>
+		<div class="control-group">
+			<div class="col-sm-offset-2 col-sm-10">
+	        	<button type="submit" class="btn btn-primary ">提 交</button>
+	        </div>
+	        <!-- <div class="controls">
+	          <button type="button" class="sui-btn btn-normal btn-xlarge">重 置</button>
+	        </div> -->
+      </div>

@@ -1,0 +1,37 @@
+<#include "/web/common/_layout.html"/>
+<@layout >
+<style type="text/css">
+  [v-cloak] { display: none }
+</style>
+  <div class="col-md-12">
+      <div class="row">
+      	  <div class="col-md-12 " >
+	      	  <div class="btn-group ">
+			    <a class="btn btn-bordered btn-success " href="${cxt!}/blog/add">新增</a>
+			  </div>
+			    <div class="btn-group ">
+			    <a class="btn btn-bordered btn-info " href="#">导入</a>
+			    <a class="btn btn-bordered btn-info " href="#">导出</a>
+			  </div>
+      	  </div>
+          <div class="col-md-12" v-cloak>
+              <v-table url="${cxt!}/blog/query"></v-table>
+          </div>
+      </div>
+  </div>
+   <#include "query.html" /> <@blogTable/>
+
+</@layout>
+<script>
+	 // 创建根实例
+	 new Vue({
+	     el: 'body'
+	 });
+	 
+	 $('#delete-confirm-modal').on('show.bs.modal', function(e) {
+		
+		 //$(this).find('#delete-ok').attr('href', $(e.relatedTarget).data('href'));
+		 
+	});
+	 
+ </script>

@@ -1,0 +1,33 @@
+<#macro blogTable>
+	<#include "/web/common/_table.html"/>
+	<@table>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>标题</th>
+				<th>内容</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody v-show="!loading">
+		<tr v-for="x in items">
+			<td>{{x.id}}</td>
+			<td>{{x.title}}</td>
+			<td>{{x.content}}</td>
+			<td>
+				<!-- <a class="btn btn-bordered btn-danger" data-toggle="modal" data-href="${cxt!}/blog/delete/{{x.id}}" data-target="#delete-confirm-modal">删除</a> -->
+				<a class="btn btn-bordered btn-info " href="${cxt!}/blog/edit/{{x.id}}">修改</a>
+				<a class="btn btn-bordered btn-danger" href="${cxt!}/blog/delete/{{x.id}}">删除</a> 
+			</td>
+		</tr>
+		</tbody>
+		<tbody v-show="loading">
+			<tr>
+				<td colspan="999" class="text-center warning" >loading ... </td>
+			</tr>
+		</tbody>
+		
+		<#include "/web/common/_confirm.html" /> <@confirm/>
+		
+	</@table>
+</#macro>

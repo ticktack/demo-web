@@ -1,0 +1,11 @@
+<#include "/web/common/_layout.html" />
+<@layout>
+<form class="form-horizontal" data-toggle='validate' action="${cxt!}/blog/update" method="post">
+	<input type="hidden" id="id" name="id" value="${id!}"/>
+	<#include "_form.html" />
+</form>
+</@layout>
+
+ <script>
+  	model('.form-horizontal', '/blog/model/', document.getElementById('id').value)
+ </script>

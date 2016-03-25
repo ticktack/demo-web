@@ -1,0 +1,31 @@
+<#include "/web/common/_layout.html"/>
+<@layout>
+<h1>MicroRest Demo 项目首页</h1>
+<div class="table_box" style="font-weight:bold;">
+	<p>欢迎来到 MicroRest 微服务 极速开发世界！参考demo 1. <a href="/blog"><b>博客增删改查Demo</b></a>
+	2. <a href="/admdiv"><b>树组件加载Demo</b></a>
+	3. <a href="/admdiv/search"><b>树搜索组件Demo</b></a></p>
+	<h3><span style="color:green;">MicroRest(Microservice architecture and RESTful 的缩写)，采用服务端、客户端构建分布式微服务开发框架。服务端提供Rest API ，客户端通过RestClient调用Rest API，HTTP协议传递JSON进行通信。选用JFinal极速开发框架来完成服务端、客户端的内部实现。</span></h3>
+	<br>
+	微服务架构是：采用一组服务的方式来构建一个应用，服务独立部署在不同的进程中，不同服务通过一些轻量级交互机制来通信，例如 RPC、HTTP 等，服务可独立扩展伸缩，每个服务定义了明确的边界，不同的服务甚至可以采用不同的编程语言来实现，由独立的团队来维护。
+	<br>
+	微服务架构主要有以下几个优点：<br>
+	1、每个服务只需要做好一件事，更加专注和简单；<br>
+	2、用合适的工具来做合适的事情；<br>
+	3、服务之间是松耦合的；<br>
+    4、服务的团队之间是相互独立的。<br>
+    <br> 
+    REST，即表述性状态传递（英文：Representational State Transfer，简称REST）是Roy Fielding博士在2000年他的博士论文中提出来的一种软件架构风格。它是一种针对网络应用的设计和开发方式，可以降低开发的复杂性，提高系统的可伸缩性。
+	<br> 
+	
+	为何选择Rest作为微服务的服务接口？<br>
+	Microservices是一个全新的概念，它主要的观点是将一个大型的服务系统分解成多个微型系统。每个微型系统都能独立工作，并且提供各种不同的服务。独立运行的特点使微型系统之间不会产生相互影响，其中的一个微型系统宕机并不会牵连到其他的微型系统。这种架构使分布式系统的节点数量大大提升。因为RESTful服务是无状态的，所以这种分解并不会带来状态共享的问题。<br/>
+	
+	<br> 
+	实现架构为何选择JFinal？<br>
+	JFinal 是基于 Java 语言的极速 WEB + ORM 框架，其核心设计目标是开发迅速、代码量少、学习简单、功能强大、轻量级、易扩展、Restful。在拥有Java语言所有优势的同时再拥有ruby、python、php等动态语言的开发效率！为您节约更多时间，去陪恋人、家人和朋友 :)
+	<br/> 
+	
+	
+</div>
+</@layout>
